@@ -9,8 +9,8 @@ const route = express.Router()
 const validator = createValidator()
 
 const schema = Joi.object({
-  product: Joi.string().regex(/[A-Za-z ]{1,32}/),
-  quantity: Joi.number().min(1).max(999)
+  product: Joi.string().required().regex(/[A-Za-z ]{1,32}/),
+  quantity: Joi.number().required().min(1).max(999)
 })
 
 route.post('/order', validator.body(schema), async (req, res, next) => {

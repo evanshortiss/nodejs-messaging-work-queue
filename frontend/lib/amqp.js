@@ -5,8 +5,11 @@ const { AMQP: AMQP_CONFIG, NODE_ENV } = require('./config')
 const crypto = require('crypto')
 const log = require('./log')
 
-const IS_LOCAL = NODE_ENV === 'local'
+// When not running in production allow AMQP to be a no-op
+const AMQP_NOOP = NODE_ENV !== 'production' && !AMQP_CONFIG.HOST
 const id = 'frontend-nodejs-' + crypto.randomBytes(2).toString('hex')
+
+log.info(`creating AMQP connection with ID: ${id}`)
 const container = rhea.create_container({ id })
 
 let connection
@@ -46,11 +49,11 @@ exports.sendMessage = function (body) {
   log.debug(`${id}: constructed message for sending: %j`, message)
 
   if (!connection) {
-    if (!IS_LOCAL) {
+    if (!AMQP_NOOP) {
       log.warn(`${id}: AMQP is not connected but an attempt was made to send a message`)
       return Promise.reject(new Error('AMQP connection is not ready/available'))
     } else {
-      log.warn(`${id}: In local development mode. Noop sending to AMQP ${JSON.stringify(message)}`)
+      log.warn(`${id}: In development mode and AMQP connection environment variables were not set. AQMP noop for message - ${JSON.stringify(message)}`)
       return Promise.resolve(message.message_id)
     }
   } else {

@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  labels:
+    app: order-entry-system
+  name: order-entry-system
+  namespace: order-system-live
+spec:
+  clusterIP: 172.30.229.209
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    deploymentconfig: order-entry-system
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

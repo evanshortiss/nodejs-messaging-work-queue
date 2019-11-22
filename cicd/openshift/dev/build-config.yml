@@ -1,0 +1,36 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  labels:
+    app: order-entry-system
+  name: order-entry-system
+  namespace: order-system-dev
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: order-entry-system:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    contextDir: /frontend
+    git:
+      ref: jekins-cicd
+      uri: https://github.com/evanshortiss/nodejs-messaging-work-queue/
+    type: Git
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: nodejs:10
+        namespace: openshift
+    type: Source
+  triggers:
+  - generic:
+      secret: 12a7884c7a160f95
+    type: Generic
+  - type: ConfigChange

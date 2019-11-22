@@ -1,0 +1,21 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  labels:
+    app: order-entry-system
+  name: order-entry-system
+  namespace: order-system-dev
+spec:
+  lookupPolicy:
+    local: false
+status:
+  dockerImageRepository: docker-registry.default.svc:5000/order-system-dev/order-entry-system
+  tags:
+  - items:
+    - created: 2019-11-21T23:53:28Z
+      dockerImageReference: docker-registry.default.svc:5000/order-system-dev/order-entry-system@sha256:ff9cd4b99981b8f3ee625ba4401a660e8a2e023fea78874046d5570dc8631cac
+      generation: 1
+      image: sha256:ff9cd4b99981b8f3ee625ba4401a660e8a2e023fea78874046d5570dc8631cac
+    tag: latest

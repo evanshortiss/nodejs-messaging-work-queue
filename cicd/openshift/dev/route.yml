@@ -1,0 +1,28 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+    openshift.io/host.generated: "true"
+  labels:
+    app: order-entry-system
+  name: order-entry-system
+  namespace: order-system-dev
+spec:
+  port:
+    targetPort: 8080-tcp
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: order-entry-system
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    - lastTransitionTime: 2019-11-21T23:51:11Z
+      status: "True"
+      type: Admitted
+    routerName: router
+    wildcardPolicy: None

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-'use strict';
+'use strict'
 
 /*
  *
@@ -24,46 +24,46 @@
  * Module dependencies.
  */
 
-const cluster = require('cluster');
-const debug = require('debug')('order-entry-ui:server');
-const http = require('http');
-var server;
-var port;
+const cluster = require('cluster')
+const debug = require('debug')('order-entry-ui:server')
+const http = require('http')
+var server
+var port
 
 if (cluster.isMaster) {
-  console.log('Forking worker from master');
-  cluster.fork();
-  cluster.on('exit', function(worker, code, signal) {
+  console.log('Forking worker from master')
+  cluster.fork()
+  cluster.on('exit', function (worker, code, signal) {
     console.log('Worker %d died with code/signal %s', worker.process.pid, signal || code)
     if (code === 100) {
-      console.log('Restarting worker in 5 seconds due to exit code 100 (amqp connection related)...');
+      console.log('Restarting worker in 5 seconds due to exit code 100 (amqp connection related)...')
       setTimeout(() => {
-        cluster.fork();
-      }, 5000);
+        cluster.fork()
+      }, 5000)
     }
-  });
+  })
 } else {
-  const app = require('../app');
+  const app = require('../app')
   /**
    * Get port from environment and store in Express.
    */
 
-  port = normalizePort(process.env.PORT || '8080');
-  app.set('port', port);
+  port = normalizePort(process.env.PORT || '8080')
+  app.set('port', port)
 
   /**
    * Create HTTP server.
    */
 
-  server = http.createServer(app);
+  server = http.createServer(app)
 
   /**
    * Listen on provided port, on all network interfaces.
    */
 
-  server.listen(port);
-  server.on('error', onError);
-  server.on('listening', onListening);
+  server.listen(port)
+  server.on('error', onError)
+  server.on('listening', onListening)
 }
 
 /**
@@ -71,19 +71,19 @@ if (cluster.isMaster) {
  */
 
 function normalizePort (val) {
-  const port = parseInt(val, 10);
+  const port = parseInt(val, 10)
 
   if (isNaN(port)) {
     // named pipe
-    return val;
+    return val
   }
 
   if (port >= 0) {
     // port number
-    return port;
+    return port
   }
 
-  return false;
+  return false
 }
 
 /**
@@ -92,23 +92,23 @@ function normalizePort (val) {
 
 function onError (error) {
   if (error.syscall !== 'listen') {
-    throw error;
+    throw error
   }
 
   const bind = typeof port === 'string'
     ? 'Pipe ' + port
-    : 'Port ' + port;
+    : 'Port ' + port
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
+      console.error(bind + ' requires elevated privileges')
+      process.exit(1)
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
+      console.error(bind + ' is already in use')
+      process.exit(1)
     default:
-      throw error;
+      throw error
   }
 }
 
@@ -117,9 +117,9 @@ function onError (error) {
  */
 
 function onListening () {
-  const addr = server.address();
+  const addr = server.address()
   const bind = typeof addr === 'string'
     ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+    : 'port ' + addr.port
+  debug('Listening on ' + bind)
 }

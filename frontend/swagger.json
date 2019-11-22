@@ -1,0 +1,87 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Customer-Facing Orders API",
+    "version": "1.0.0",
+    "description": "Enables customers to place orders."
+  },
+  "paths": {
+    "/api/order": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            },
+            "in": "body",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The completed order with an ID, and datetime it was recorded at.",
+            "schema": {
+              "$ref": "#/definitions/OrderComplete"
+            }
+          }
+        },
+        "operationId": "create-order",
+        "summary": "Creates an order with the given Order Object in the request body."
+      }
+    }
+  },
+  "definitions": {
+    "Order": {
+      "title": "Root Type for Order",
+      "description": "The order object containing a product and quantity.",
+      "type": "object",
+      "properties": {
+        "product": {
+          "type": "string"
+        },
+        "quantity": {
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "example": {
+        "product": "Windshield Wipers",
+        "quantity": 2
+      }
+    },
+    "OrderComplete": {
+      "title": "Root Type for OrderComplete",
+      "description": "An object representing a completed order. The server will return this to clients.",
+      "type": "object",
+      "properties": {
+        "product": {
+          "type": "string"
+        },
+        "quantity": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "id": {
+          "type": "string"
+        },
+        "datetime": {
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "example": {
+        "product": "Windshield Wipers",
+        "quantity": 2,
+        "id": "5db0ad77",
+        "datetime": "2019-11-25T20:49:57.967Z"
+      }
+    }
+  }
+}
