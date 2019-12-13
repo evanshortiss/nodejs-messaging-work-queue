@@ -19,7 +19,7 @@ spec:
   source:
     contextDir: /frontend
     git:
-      ref: jekins-cicd
+      ref: jenkins-cicd
       uri: https://github.com/evanshortiss/nodejs-messaging-work-queue/
     type: Git
   strategy:
