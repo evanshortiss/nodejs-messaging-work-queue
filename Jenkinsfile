@@ -139,7 +139,7 @@ pipeline {
           service = toolbox.prepareThreescaleService(
             openapi:          [ filename: 'frontend/swagger.json' ],
             // The system name is the API in the 3scale tenant. The private base url targets our API service
-            environment:      [ baseSystemName: 'order-entry-system-dev', privateBaseUrl: 'http://order-entry-system.order-system-dev:8080' ],
+            environment:      [ environmentName: 'dev', baseSystemName: 'order-entry-system-dev', privateBaseUrl: 'http://order-entry-system.order-system-dev:8080' ],
             // This tells toolbox where to find credentials. They're in a secret in the jenkins-cicd namespace.
             // We want to use the "3scale-admin" as destination since that's the default RHMI tenant
             toolbox:          [ openshiftProject: 'jenkins-cicd', destination: 'rhmi-cluster', secretName: '3scale-toolbox' ],
