@@ -8,7 +8,7 @@ metadata:
   name: order-entry-system
   namespace: order-system-dev
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     deploymentconfig: order-entry-system
   strategy:
