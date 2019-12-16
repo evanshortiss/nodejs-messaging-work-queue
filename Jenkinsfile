@@ -92,7 +92,11 @@ pipeline {
       when { changeset "cicd/openshift/dev/route.yml" }
       steps {
         script {
-          sh "oc patch route/order-entry-system --patch \"\$(cat cicd/openshift/dev/route.yml)\" -n ${env.PROJECT_ID_DEVELOPMENT}"
+          openshift.withCluster() {
+            openshift.withProject(env.PROJECT_ID_DEVELOPMENT) {
+              openshift.apply(readFile('cicd/openshift/dev/route.yml'), '--force')
+            }
+          }
         }
       }
     }
