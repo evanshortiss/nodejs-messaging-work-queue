@@ -9,6 +9,7 @@ metadata:
   name: order-entry-system
   namespace: order-system-dev
 spec:
+  host: order-entry-dev.apps.eshortis-03f0.open.redhat.com
   port:
     targetPort: 8080-tcp
   tls:
