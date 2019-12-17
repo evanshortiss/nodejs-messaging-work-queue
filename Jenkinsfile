@@ -12,7 +12,7 @@ pipeline {
     }
   }
   options {
-    timeout(time: 20, unit: 'MINUTES')
+    timeout(time: 45, unit: 'MINUTES')
   }
   environment {
     HUSKY_SKIP_INSTALL = "true"
@@ -168,7 +168,7 @@ pipeline {
     stage('deploy(live): promotion prompt') {
       steps {
         script {
-          timeout(time:15, unit:'MINUTES') {
+          timeout(time:30, unit:'MINUTES') {
             try {
               // The input method throws if user chooses "Abort" instead of "Continue"
               deployLive = input(message: 'Promote this build to live environment?', ok: 'Continue')
