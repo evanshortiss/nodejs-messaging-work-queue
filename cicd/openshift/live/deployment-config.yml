@@ -8,7 +8,7 @@ metadata:
   name: order-entry-system
   namespace: order-system-live
 spec:
-  replicas: 1
+  replicas: 3
   revisionHistoryLimit: 5
   selector:
     app: order-entry-system
